@@ -129,8 +129,16 @@ def add_machine():
         flash("⛔ Vui lòng điền đầy đủ thông tin!")
         return redirect(url_for('admin'))
 
-    if AllowedMachine.query.filter_by(uuid=uuid).first():
+    # Kiểm tra máy đã có với uuid nhưng tên tool khác
+    existing_machine = AllowedMachine.query.filter_by(uuid=uuid).first()
+    if existing_machine:
         flash("⚠️ Máy này đã có trong danh sách hợp lệ!")
+        return redirect(url_for('admin'))
+
+    # Kiểm tra máy trong PendingMachine với cùng uuid và tool_name
+    existing_pending_machine = PendingMachine.query.filter_by(uuid=uuid).first()
+    if existing_pending_machine:
+        flash("⚠️ Máy này đang chờ duyệt!")
         return redirect(url_for('admin'))
 
     new_machine = AllowedMachine(
@@ -239,12 +247,15 @@ def approve_machine(uuid, tool_name):
     machine = PendingMachine.query.filter_by(uuid=uuid, tool_name=tool_name).first()
 
     if machine:
+        # Lấy discord_name từ PendingMachine
+        discord_name = machine.discord_name
+
         new_allowed_machine = AllowedMachine(
             hostname=machine.hostname,
             uuid=machine.uuid,
             tool_name=machine.tool_name,
             expiry_date=expiry_date,
-            discord_name=""
+            discord_name=discord_name  # Gán discord_name từ PendingMachine
         )
         db.session.add(new_allowed_machine)
         db.session.delete(machine)
