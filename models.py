@@ -14,8 +14,8 @@ class AllowedMachine(db.Model):
 
 class PendingMachine(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    hostname = db.Column(db.String(255), nullable=False)
     uuid = db.Column(db.String(255), nullable=False)
-    mac = db.Column(db.String(255), nullable=False)  # <-- bỏ unique=True
     tool_name = db.Column(db.String(255), nullable=False)
     discord_name = db.Column(db.String(100), nullable=True)
     
