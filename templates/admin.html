@@ -95,9 +95,11 @@
   <body>
     <h1>Quản lý danh sách máy hợp lệ</h1>
 
-    {% with messages = get_flashed_messages() %} {% if messages %}
+    {% with messages = get_flashed_messages() %} 
+    {% if messages %}
     <div class="flash">{{ messages[0] }}</div>
-    {% endif %} {% endwith %}
+    {% endif %}
+    {% endwith %}
 
     <h2>Danh sách máy chờ duyệt</h2>
     <table>
@@ -112,7 +114,7 @@
       {% for machine in pending_machines %}
       <tr>
         <form action="/approve_machine/{{ machine.uuid }}/{{ machine.tool_name }}" method="post">
-          <td><input type="text" name="discord_name" placeholder="Discord Name"></td>
+          <td><input type="text" name="discord_name" placeholder="Discord Name" value="{{ machine.discord_name or '' }}"></td>
           <td>{{ machine.hostname }}</td>
           <td>{{ machine.uuid }}</td>
           <td>{{ machine.tool_name }}</td>

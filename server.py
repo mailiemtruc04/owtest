@@ -237,6 +237,8 @@ def register_machine():
 @app.route('/approve_machine/<uuid>/<tool_name>', methods=['POST'])
 def approve_machine(uuid, tool_name):
     expiry_date_str = request.form.get('expiry_date')
+    discord_name = request.form.get('discord_name')  # Lấy discord_name từ form
+    
     try:
         expiry_date = datetime.strptime(expiry_date_str, "%Y-%m-%dT%H:%M")
         expiry_date = expiry_date.replace(second=0, microsecond=0)
@@ -247,15 +249,12 @@ def approve_machine(uuid, tool_name):
     machine = PendingMachine.query.filter_by(uuid=uuid, tool_name=tool_name).first()
 
     if machine:
-        # Lấy discord_name từ PendingMachine
-        discord_name = machine.discord_name
-
         new_allowed_machine = AllowedMachine(
             hostname=machine.hostname,
             uuid=machine.uuid,
             tool_name=machine.tool_name,
             expiry_date=expiry_date,
-            discord_name=discord_name  # Gán discord_name từ PendingMachine
+            discord_name=discord_name  # Gán discord_name từ form
         )
         db.session.add(new_allowed_machine)
         db.session.delete(machine)
