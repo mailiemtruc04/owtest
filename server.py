@@ -27,7 +27,7 @@ with app.app_context():
 
 # Đăng ký tài khoản admin mặc định
 USERNAME = "admin"
-PASSWORD = "0934828105t"
+PASSWORD = "0934828105Trcdz@#"
 
 # Cấu hình Flask-Login
 login_manager = LoginManager()
