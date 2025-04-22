@@ -131,7 +131,7 @@ def add_machine():
 
     # Kiểm tra máy đã có với uuid nhưng tên tool khác
     existing_machine = AllowedMachine.query.filter_by(uuid=uuid).first()
-    if existing_machine:
+    if existing_machine and existing_machine.tool_name == tool_name:
         flash("⚠️ Máy này đã có trong danh sách hợp lệ!")
         return redirect(url_for('admin'))
 

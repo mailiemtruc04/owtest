@@ -170,11 +170,11 @@
 
     <h2>Thêm máy mới (thủ công)</h2>
     <form action="/add_machine" method="post">
+      <input type="text" name="discord_name" placeholder="Discord Name (tùy chọn)" />
       <input type="text" name="hostname" placeholder="Hostname" required />
       <input type="text" name="uuid" placeholder="UUID" required />
       <input type="text" name="tool_name" placeholder="Tên Tool" required />
       <input type="datetime-local" name="expiry_date" required />
-      <input type="text" name="discord_name" placeholder="Discord Name (tùy chọn)" />
       <button type="submit">Thêm máy</button>
     </form>
 
