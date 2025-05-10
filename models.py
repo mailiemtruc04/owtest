@@ -23,7 +23,7 @@ class PendingMachine(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     hostname = db.Column(db.String(255), nullable=False)
-    uuid = db.Column(UUID(as_uuid=True), nullable=False, default=uuid.uuid4)  # Use UUID type for PostgreSQL
+    uuid = db.Column(UUID(as_uuid=True), nullable=False)  # Use UUID type for PostgreSQL
     tool_name = db.Column(db.String(255), nullable=False)
     discord_name = db.Column(db.String(100), nullable=True)
 
