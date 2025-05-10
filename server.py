@@ -13,7 +13,7 @@ load_dotenv()
 
 # Khởi tạo Flask App
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = os.environ.get("SECRET_KEY")
 
 # Cấu hình PostgreSQL từ biến môi trường
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
