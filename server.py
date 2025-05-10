@@ -13,11 +13,11 @@ load_dotenv()
 
 # Khởi tạo Flask App
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
 
 # Cấu hình PostgreSQL từ biến môi trường
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = os.getenv("SECRET_KEY")
 
 # Import Database & Models
 from database import db
