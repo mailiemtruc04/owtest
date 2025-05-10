@@ -6,14 +6,19 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pytz
 import requests
+from dotenv import load_dotenv
+
+# Load biến môi trường từ .env
+load_dotenv()
 
 # Khởi tạo Flask App
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 
-# Cấu hình PostgreSQL trên Render
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://owuser:iqc0RXUeGC8x2EjGhpc3VQ1ivdPn5vqx@dpg-d03ed1idbo4c738af54g-a/ow_2exg"
+# Cấu hình PostgreSQL từ biến môi trường
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.secret_key = os.getenv("SECRET_KEY")
 
 # Import Database & Models
 from database import db
