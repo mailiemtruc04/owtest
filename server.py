@@ -273,6 +273,32 @@ def approve_machine(uuid, tool_name):
 
     return redirect(url_for('admin'))
 
+@app.route('/approve_permanent/<uuid>/<tool_name>', methods=['POST'])
+def approve_permanent(uuid, tool_name):
+    discord_name = request.form.get('discord_name')  # Lấy discord_name từ form
+
+    machine = PendingMachine.query.filter_by(uuid=uuid, tool_name=tool_name).first()
+    if machine:
+        permanent_date = datetime(2099, 12, 31, 23, 59)
+
+        new_allowed_machine = AllowedMachine(
+            hostname=machine.hostname,
+            uuid=machine.uuid,
+            tool_name=machine.tool_name,
+            expiry_date=permanent_date,
+            discord_name=discord_name
+        )
+
+        db.session.add(new_allowed_machine)
+        db.session.delete(machine)
+        db.session.commit()
+        flash(f"✅ Duyệt máy dùng vĩnh viễn cho tool '{tool_name}'!")
+    else:
+        flash("⛔ Không tìm thấy máy cần duyệt.")
+
+    return redirect(url_for('admin'))
+
+
 @app.route('/delete_pending/<uuid>/<tool_name>')
 def delete_pending(uuid, tool_name):
     machine = PendingMachine.query.filter_by(uuid=uuid, tool_name=tool_name).first()

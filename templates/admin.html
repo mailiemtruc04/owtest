@@ -121,6 +121,12 @@
           <td><input type="datetime-local" name="expiry_date" required /></td>
           <td>
             <button type="submit">✔️ Duyệt</button>
+
+            <form action="/approve_permanent/{{ machine.uuid }}/{{ machine.tool_name }}" method="post" style="display:inline-block; margin-right:5px;">
+              <input type="hidden" name="discord_name" value="{{ machine.discord_name or '' }}">
+              <button type="submit">⭐ Duyệt vĩnh viễn</button>
+            </form>
+
             <a href="/delete_pending/{{ machine.uuid }}/{{ machine.tool_name }}">
               <button class="delete-btn" type="button">❌ Xóa</button>
             </a>
